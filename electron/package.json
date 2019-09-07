@@ -1,0 +1,16 @@
+{
+  "name": "ktx-macro-electron",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "NODE_ENV=dev electron ."
+  },
+  "devDependencies": {
+    "electron": "^4.0.3"
+  },
+  "dependencies": {
+    "electron-serve": "^0.2.0"
+  }
+}

@@ -134,8 +134,10 @@ app.get("/trainList", (req, res, next) => {
     const startStationText = stations.find(s => s.value === startStation)!.text;
     const destStattionText = stations.find(s => s.value === destStation)!.text;
 
+    console.log(requestTime);
+
     const lookupParam = {
-        selGoTrain: "05",
+        selGoTrain: "00",
         txtPsgFlg_1: 1, // n: 어른 수
         txtPsgFlg_2: 0, // 장애 만4세~12세 어린이
         txtPsgFlg_3: 0, // 만 65세 이상
@@ -144,7 +146,7 @@ app.get("/trainList", (req, res, next) => {
         txtSeatAttCd_3: "000", // 좌석종류 기본:000, 1인석:011, 창가좌석:012, 내측좌석:013
         txtSeatAttCd_2: "000", // 좌석반향 전체:000, 순방향:009, 역방향:010
         txtSeatAttCd_4: "015", // 세부적인 특징: 기본:015, 노트북 031, 유아동반:019
-        selGoTrainRa: "05", // 열차 종류. 전체:05, KTX_SRT:00, ITX_청춘:09, 새마을호/ITX-새마을:08, 무궁화:02, 통근열차:03
+        selGoTrainRa: "00", // 열차 종류. 전체:05, KTX_SRT:00, ITX_청춘:09, 새마을호/ITX-새마을:08, 무궁화:02, 통근열차:03
         radJobId: 1, // 직통:1, 나머진(환승, 왕복) 귀찮다. 안한다.
         txtGoStart: startStationText,
         txtGoEnd: destStattionText,
@@ -154,7 +156,7 @@ app.get("/trainList", (req, res, next) => {
         selGoMonth: requestDate.format("MM"), // MM형식으로 맞춰야함
         selGoDay: requestDate.format("DD"),
         selGoHour: requestTime,
-        txtGoHour: "",
+        txtGoHour: requestTime + "0000",
         selGoSeat1: "015",
         txtPsgCnt1: 1, // 전체 사람수 (휠체어 좌석 선택시 전체사람수 - 장애인수)
         txtPsgCnt2: 0, // 장애인 사람
@@ -240,7 +242,7 @@ app.post("/reserveTrain", async (req, res, next) => {
             s => s.value === params.destPoint
         )!.text;
         const reserveParam = {
-            selGoTrain: "05",
+            selGoTrain: "00",
             txtPsgFlg_1: 1, // n: 어른 수
             txtPsgFlg_2: 0, // 장애 만4세~12세 어린이
             txtPsgFlg_3: 0, // 만 65세 이상
@@ -249,7 +251,7 @@ app.post("/reserveTrain", async (req, res, next) => {
             txtSeatAttCd_3: "000", // 좌석종류 기본:000, 1인석:011, 창가좌석:012, 내측좌석:013
             txtSeatAttCd_2: "000", // 좌석반향 전체:000, 순방향:009, 역방향:010
             txtSeatAttCd_4: "015", // 세부적인 특징: 기본:015, 노트북 031, 유아동반:019
-            selGoTrainRa: "05", // 열차 종류. 전체:05, KTX_SRT:00, ITX_청춘:09, 새마을호/ITX-새마을:08, 무궁화:02, 통근열차:03
+            selGoTrainRa: "00", // 열차 종류. 전체:05, KTX_SRT:00, ITX_청춘:09, 새마을호/ITX-새마을:08, 무궁화:02, 통근열차:03
             radJobId: 1, // 직통:1, 나머진(환승, 왕복) 귀찮다. 안한다.
             txtGoStart: startStationText,
             txtGoEnd: destStattionText,
@@ -351,7 +353,6 @@ app.post("/reserveTrain", async (req, res, next) => {
             childCount,
             adultCount
         });
-        console.log(requestReservationResponse.data);
         if (requestReservationResponse.data.includes("/login.do")) {
             res.status(HttpStatus.UNAUTHORIZED).send("invalid token");
             return;

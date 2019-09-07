@@ -1,5 +1,9 @@
 # ktx-macro
 
+## Description
+
+KTX macro uses Nodejs version v12.10
+
 ## Project setup
 
 ```
